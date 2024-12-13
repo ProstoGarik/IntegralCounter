@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntegralCounterWPF"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -12,9 +13,25 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <TextBox Text="Нижний предел" HorizontalAlignment="Left"/>
-            <TextBox Text="Верхний предел" HorizontalAlignment="Right"/>
-            <Button HorizontalAlignment="Center" Width="100" Height="50"></Button>
+            <TextBlock Text="Количество ядер: " FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"/>
+            <ComboBox x:Name="procCountComboBox" Text="00" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250 0 0 0" Width="40"/>
+            <TextBlock Text="Нижний предел" HorizontalAlignment="Left" Margin="50"/>
+            <TextBlock Text="Верхний предел" HorizontalAlignment="Right" Margin="50"/>
+            <TextBox Name="LowerBorder" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="50" Margin="50"/>
+            <TextBox Name="UpperBorder" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Height="50" Margin="50"/>
+            <Button HorizontalAlignment="Center" Width="100" Height="50" Click="Button_Click">
+                <TextBlock Text="Посчитать"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <lvc:CartesianChart Name="Chart" LegendLocation="Right">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Name="ToleranceAxis" Title="Точность"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Name="TimeAxis" Title="Время (мс)"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
         </Grid>
 
     </Grid>

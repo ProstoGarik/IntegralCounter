@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegralCounter", "Integral
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegralCounterWPF", "IntegralCounterWPF\IntegralCounterWPF.csproj", "{A140FAF1-965F-44EA-8478-8549DD90257E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegralCounterLibrary", "IntegralCounterLibrary\IntegralCounterLibrary.csproj", "{751853A0-A6F8-4A21-9976-57ABFA340F2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A140FAF1-965F-44EA-8478-8549DD90257E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A140FAF1-965F-44EA-8478-8549DD90257E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A140FAF1-965F-44EA-8478-8549DD90257E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{751853A0-A6F8-4A21-9976-57ABFA340F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{751853A0-A6F8-4A21-9976-57ABFA340F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{751853A0-A6F8-4A21-9976-57ABFA340F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{751853A0-A6F8-4A21-9976-57ABFA340F2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
