@@ -26,10 +26,12 @@ namespace IntegralCounterWPF
         public SeriesCollection SeriesCollection { get; set; }
         Stopwatch Stopwatch;
         double starterTolerance = 0.1;
+        public Func<double, string> XAxisFormatter { get; set; }
+        public Func<double, string> YAxisFormatter { get; set; }
         public MainWindow()
         {
-            InitializeComponent();
             DataContext = this;
+            InitializeComponent();
             counterMethods = new CounterMethods();
             Stopwatch = new Stopwatch();
             SeriesCollection = new SeriesCollection
@@ -55,6 +57,14 @@ namespace IntegralCounterWPF
                     Values = new ChartValues<ObservablePoint>{ }
                 }
             };
+
+            initializeProcessors();
+
+            Chart.Series = SeriesCollection;
+            XAxisFormatter = value => $"{value:0.000}";
+            YAxisFormatter = value => $"{value:0.##} ms";
+
+
         }
         private void initializeProcessors()
         {
@@ -76,8 +86,33 @@ namespace IntegralCounterWPF
             Stopwatch.Start();
             double start = Convert.ToDouble(LowerBorder.Text);
             double end = Convert.ToDouble(UpperBorder.Text);
-            counterMethods.Integrate(counterMethods.ParabolaGetY1, start, end, starterTolerance);
 
+            double tempTolerance = starterTolerance;
+
+            for (double i = 1; i < 9; i++)
+            {
+                Stopwatch.Restart();
+                counterMethods.Integrate(counterMethods.ParabolaGetY1, start, end, tempTolerance);
+                double logTolerance = Math.Abs(Math.Log10(tempTolerance));
+                SeriesCollection[0].Values.Add(new ObservablePoint(logTolerance, Stopwatch.Elapsed.TotalMilliseconds));
+
+                Stopwatch.Restart();
+                counterMethods.IntegrateWithSegments(start, end, ProcCount, tempTolerance);
+                SeriesCollection[1].Values.Add(new ObservablePoint(logTolerance, Stopwatch.Elapsed.TotalMilliseconds));
+
+                Stopwatch.Restart();
+                counterMethods.IntegrateThreads(start, end, Convert.ToInt32(procCountComboBox.SelectedItem), tempTolerance);
+                SeriesCollection[2].Values.Add(new ObservablePoint(logTolerance, Stopwatch.Elapsed.TotalMilliseconds));
+
+                Stopwatch.Restart();
+                counterMethods.IntegrateWithSegments(start, end, Convert.ToInt32(procCountComboBox.SelectedItem), tempTolerance);
+                SeriesCollection[3].Values.Add(new ObservablePoint(logTolerance, Stopwatch.Elapsed.TotalMilliseconds));
+
+                tempTolerance = starterTolerance * Math.Pow(10, -i);
+            }
+
+
+            
         }
     }
 }

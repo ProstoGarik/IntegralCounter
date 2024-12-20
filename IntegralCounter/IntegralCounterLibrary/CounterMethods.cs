@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace IntegralCounterLibrary
 {
@@ -48,19 +49,19 @@ namespace IntegralCounterLibrary
             return previousArea;
         }
 
-        public double IntegrateWithSegments(double a, double b, int segments)
+        public double IntegrateWithSegments(double a, double b, int segments, double tolerance)
         {
             double segmentSize = (b - a) / segments;
             double areaSum = 0;
 
             for (int i = 0; i < segments; i++)
             {
-                areaSum += Integrate(ParabolaGetY1, i * segmentSize, i * segmentSize + segmentSize, Tolerance);
+                areaSum += Integrate(ParabolaGetY1, i * segmentSize, i * segmentSize + segmentSize, tolerance);
             }
 
             return areaSum;
         }
-        public double IntegrateThreads(double a, double b, int segments)
+        public double IntegrateThreads(double a, double b, int segments, double tolerance)
         {
             double segmentSize = (b - a) / segments;
             double areaSum = 0;
@@ -72,7 +73,7 @@ namespace IntegralCounterLibrary
                 int tempIndex = i;
                 Thread thread = new Thread(() =>
                 {
-                    double tempSum = Integrate(ParabolaGetY1, tempIndex * segmentSize, tempIndex * segmentSize + segmentSize, Tolerance);
+                    double tempSum = Integrate(ParabolaGetY1, tempIndex * segmentSize, tempIndex * segmentSize + segmentSize, tolerance);
                     lock (locker)
                     {
                         areaSum += tempSum;
@@ -90,7 +91,7 @@ namespace IntegralCounterLibrary
             return areaSum;
         }
 
-        public double IntegrateParallel(double a, double b, int segments)
+        public double IntegrateParallel(double a, double b, int segments, double tolerance)
         {
             double segmentSize = (b - a) / segments;
             double areaSum = 0;
@@ -103,7 +104,7 @@ namespace IntegralCounterLibrary
                 int tempIndex = i;
                 tasks.Add(Task.Run(() =>
                 {
-                    double tempSum = Integrate(ParabolaGetY1, tempIndex * segmentSize, tempIndex * segmentSize + segmentSize, Tolerance);
+                    double tempSum = Integrate(ParabolaGetY1, tempIndex * segmentSize, tempIndex * segmentSize + segmentSize, tolerance);
                     lock (locker)
                     {
                         areaSum += tempSum;
