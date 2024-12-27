@@ -105,7 +105,7 @@ namespace IntegralCounterWPF
                 SeriesCollection[2].Values.Add(new ObservablePoint(logTolerance, Stopwatch.Elapsed.TotalMilliseconds));
 
                 Stopwatch.Restart();
-                counterMethods.IntegrateWithSegments(start, end, Convert.ToInt32(procCountComboBox.SelectedItem), tempTolerance);
+                counterMethods.IntegrateParallel(start, end, Convert.ToInt32(procCountComboBox.SelectedItem), tempTolerance);
                 SeriesCollection[3].Values.Add(new ObservablePoint(logTolerance, Stopwatch.Elapsed.TotalMilliseconds));
 
                 tempTolerance = starterTolerance * Math.Pow(10, -i);
